@@ -1,28 +1,43 @@
 Firmware Site Config for Freifunk Cuxhaven
 ------------------------------------------
 
-Download der Firmware:
-----------------------
+## Firmware Kompilieren
 
-- https://www.freifunk-cuxhaven.de/category/router
+### Voraussetzungen (Stand Gluon v2018.2.x):
 
-Build
------
-You can easily create your own experimental firmware with the build script `make-release.sh`
+Muss auf dem Rechner installiert sein. Hier Beispiel Debian:
 
-Or build with these commands:
+    apt-get install git subversion python build-essential gawk unzip libncurses-dev libz-dev libssl-dev
 
-    sudo apt-get install git make gcc g++ unzip libncurses5-dev zlib1g-dev subversion gawk bzip2 libssl-dev
-    git clone https://github.com/freifunk-gluon/gluon.git
-    cd gluon
+### Gluon kompilieren
+
+Auf dieser Seite wird beschrieben, wie man die Gluon Firmware für das Freifunk Nordwest Netzwerk kompiliert. Um die Firmware zu kompilieren wird ein Rechner mit einem Linux Betriebssystem und ca. 70-100GB freier Speicher benötigt. Der make Befehl passt sich automatisch an die Anzahl von cores an.
+
+*Wichtig* Je nach Entwicklungsstand muss die Branch Version angepasst werden.
+
+    git clone https://github.com/freifunk-gluon/gluon.git ./freifunk_build -b v2018.2.x && cd ./freifunk_build
     git clone https://github.com/Freifunk-Cuxhaven/site-ffcux site
+
+    cd ..
     make update
-    D=$(date '+%y%m%d%H%M');
-    ONLY_11S="ramips-rt305x ramips-mt7621"
-    BANANAPI="sunxi"
-    RASPBPI="brcm2708-bcm2708 brcm2708-bcm2709"
-    X86="x86-64 x86-generic x86-kvm_guest x86-xen_domu"
-    WDR4900="mpc85xx-generic"
-    for TARGET in ar71xx-generic ar71xx-mikrotik ar71xx-nand $WDR4900 $RASPBPI $BANANAPI $X86; do
-    	make GLUON_TARGET=$TARGET DEFAULT_GLUON_RELEASE=2016.2.1~exp$D BROKEN=1;
-    done
+    # GLUON_BRANCH: gibt den zu verwendenden Gluon-Branch an
+    # GLUON_TARGET: gibt die Gruppe der zu bauenden Images an (siehe Gluon Doku)
+    # V: wenn V=s dann wird debug Output beim Kompilieren eingeschaltet
+    make -j $(($(grep -c processor /proc/cpuinfo)*2)) GLUON_BRANCH=stable GLUON_TARGET=ar71xx-generic V=s
+
+### Manifest und initiale Signatur erstellen
+
+    make manifest GLUON_BRANCH=stable
+
+    ./contrib/sign.sh ../firmware/release_keys/ecdsa-privatekey ./output/images/sysupgrade/stable.manifest
+
+Weitere Informationen z.B. zu automatischen Builds auch unter https://gluon.readthedocs.org/en/latest/features/autoupdater.html
+
+### Prüfsummen erstellen
+
+Die Prüfsummen werden auf dem Server automatisiert generiert.
+
+### Referenzen
+
+* https://wiki.openwrt.org/doc/howto/build
+* https://buildroot.org/downloads/manual/manual.html
