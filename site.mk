@@ -47,11 +47,6 @@ GLUON_SITE_PACKAGES := \
 # from sargon:
 GLUON_SITE_PACKAGES += \
 	roamguide
-#	ddhcpd
-
-# from https://github.com/Freifunk-Nord/eulenfunk-packages
-GLUON_SITE_PACKAGES += \
-	gluon-quickfix
 
 # from https://github.com/Freifunk-Nord/gluon-ssid-changer:
 GLUON_SITE_PACKAGES += \
@@ -61,7 +56,6 @@ GLUON_SITE_PACKAGES += \
 GLUON_SITE_PACKAGES += \
 	gluon-config-mode-ppa
 #	gluon-config-mode-contact-info-anonymous-hint
-
 
 # from T-X alt-esc package:
 #GLUON_SITE_PACKAGES += \
