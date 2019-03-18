@@ -44,32 +44,10 @@ GLUON_SITE_PACKAGES := \
 	iptables \
 	haveged
 
-# from sargon:
-GLUON_SITE_PACKAGES += \
-	roamguide
-
-# from https://github.com/Freifunk-Nord/gluon-ssid-changer:
-GLUON_SITE_PACKAGES += \
-	gluon-ssid-changer
-
-# from ffki-packages:
-GLUON_SITE_PACKAGES += \
-	gluon-config-mode-ppa
-#	gluon-config-mode-contact-info-anonymous-hint
-
 # from T-X alt-esc package:
 #GLUON_SITE_PACKAGES += \
 #	gluon-alt-esc-client \
 #	gluon-alt-esc-provider
-
-# from ffm-packages
-#GLUON_SITE_PACKAGES += \
-#	ffffm-button-bind
-
-#	some models and targets have to be excluded:
-ifeq ($(GLUON_TARGET),ar71xx-tiny)
-	GLUON_tp-link-tl-wr841n-nd-v7_SITE_PACKAGES = -ffffm-button-bind
-endif
 
 # support for USB UMTS/3G devices
 USB_PACKAGES_3G := \
@@ -137,10 +115,6 @@ USB_PACKAGES_STORAGE := \
 	kmod-nls-iso8859-2 \
 	kmod-nls-koi8r \
 	kmod-nls-utf8
-# from ffki-packages:
-USB_PACKAGES_STORAGE += \
-	gluon-usb-media \
-	gluon-config-mode-usb-media
 
 # add addition network drivers and usb stuff only to targes where disk space does not matter
 ifeq ($(GLUON_TARGET),x86-generic)
