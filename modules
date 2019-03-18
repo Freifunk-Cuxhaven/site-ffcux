@@ -2,5 +2,3 @@
 # when building gluon.
 
 # for each feed name given, add the corresponding PACKAGES_* lines
-GLUON_SITE_FEEDS='ffki sargon eulenfunk ssidchanger button'
-
